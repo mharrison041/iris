@@ -24,7 +24,9 @@ public:
 
   void close() {}
 
-  bool seekTextFor(uint8_t steno[]) {}
+  bool seekTextFor(uint8_t steno[]) {
+    return false;
+  }
 
   bool hasNext() {}
 
