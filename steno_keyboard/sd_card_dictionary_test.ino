@@ -16,4 +16,14 @@ void testSDCardDictionary() {
 
     assertFalse(dictionary.open());
   }
+
+  test("open_returnsTrue_whenFileDoesExist");
+  {
+    char fileName[] = "test";
+    SD.open(fileName, FILE_WRITE).close();
+    SDCardDictionary dictionary(fileName);
+
+    assertTrue(dictionary.open());
+    SD.remove(fileName);
+  }
 }
