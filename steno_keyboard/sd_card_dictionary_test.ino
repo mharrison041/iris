@@ -9,4 +9,11 @@ void testSDCardDictionary() {
     Serial.println("    Failed to connect to SD card");
     return;
   }
+
+  test("open_returnsFalse_whenFileDoesNotExist");
+  {
+    SDCardDictionary dictionary("void");
+
+    assertFalse(dictionary.open());
+  }
 }
