@@ -1,0 +1,2 @@
+class SDCardDictionary : public Dictionary {
+};
