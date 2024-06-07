@@ -7,6 +7,7 @@ private:
   char fileName[maxLengthOfFileName];
   File file;
   size_t numberOfEntries = 0;
+  uint32_t finalIndexOfText = 0;
 
 public:
   SDCardDictionary(char fileName[]) {
@@ -14,6 +15,7 @@ public:
   }
 
   bool open() {
+    finalIndexOfText = 0;
     file = SD.open(fileName);
     if (file) {
       numberOfEntries = 0;
@@ -53,6 +55,13 @@ public:
         uint32_t data = file.read();
         intitialIndexOfText += data << i;
       }
+
+      finalIndexOfText = 0;
+      for (int i = 3; i >= 0; i--) {
+        uint32_t data = file.read();
+        finalIndexOfText += data << i;
+      }
+
       file.seek(intitialIndexOfText);
     }
 
@@ -60,7 +69,7 @@ public:
   }
 
   bool hasNext() {
-    return false;
+    return file.position() < finalIndexOfText;
   }
 
   uint8_t next() {

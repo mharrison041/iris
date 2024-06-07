@@ -94,5 +94,27 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
+  test("hasNext_returnsTrue_whenTextHasBeenFound");
+  {
+    dictionary.open();
+    dictionary.seekTextFor(steno);
+
+    assertTrue(dictionary.hasNext());
+
+    dictionary.close();
+  }
+
+  test("hasNext_returnsFalse_whenTextHasBeenSoughtAndDictionaryHasBeenClosedAndReopened");
+  {
+    dictionary.open();
+    dictionary.seekTextFor(steno);
+    dictionary.close();
+    dictionary.open();
+
+    assertFalse(dictionary.hasNext());
+
+    dictionary.close();
+  }
+
   SD.remove(fileName);
 }
