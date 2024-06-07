@@ -40,10 +40,19 @@ public:
         if (steno[j] != data) {
           break;
         } else if (j == 2 && steno[j] == data) {
-          foundText = true; 
+          foundText = true;
           break;
         }
       }
+    }
+
+    if (foundText) {
+      uint32_t intitialIndexOfText = 0;
+      for (int i = 3; i >= 0; i--) {
+        uint32_t data = file.read();
+        intitialIndexOfText += data << i;
+      }
+      file.seek(intitialIndexOfText);
     }
 
     return foundText;
@@ -51,5 +60,7 @@ public:
 
   bool hasNext() {}
 
-  uint8_t next() {}
+  uint8_t next() {
+    return file.read();
+  }
 };
