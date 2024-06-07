@@ -9,12 +9,16 @@ void testSDCardDictionary() {
 
   char fileName[] = "test";
   File file = SD.open(fileName, FILE_WRITE);
-  uint8_t data[17] = { 0, 0, 0, 1,   // number of steno entries
-                       0, 0, 4,      // steno
-                       0, 0, 0, 15,  // initial index of text
-                       0, 0, 0, 17,  // final index of text
-                       17, 50 };     // text
-  file.write(data, 17);
+  uint8_t data[30] = { 0, 0, 0, 2,   // number of steno entries
+                       0, 0, 4,      // first steno
+                       0, 0, 0, 26,  // initial index of first text
+                       0, 0, 0, 28,  // final index of first text
+                       0, 4, 0,      // second steno
+                       0, 0, 0, 28,  // initial index of second text
+                       0, 0, 0, 30,  // final index of second text
+                       17, 50,       // first text
+                       74, 25 };     // second text
+  file.write(data, 30);
   file.close();
 
   uint8_t steno[3] = { 0, 0, 4 };
