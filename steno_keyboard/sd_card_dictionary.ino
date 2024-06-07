@@ -59,7 +59,9 @@ public:
     return foundText;
   }
 
-  bool hasNext() {}
+  bool hasNext() {
+    return false;
+  }
 
   uint8_t next() {
     return file.read();

@@ -84,5 +84,14 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
+  test("hasNext_returnsFalse_whenTextHasNotBeenSought");
+  {
+    dictionary.open();
+
+    assertFalse(dictionary.hasNext());
+
+    dictionary.close();
+  }
+
   SD.remove(fileName);
 }
