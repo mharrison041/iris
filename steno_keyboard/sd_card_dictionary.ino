@@ -16,6 +16,7 @@ public:
   bool open() {
     file = SD.open(fileName);
     if (file) {
+      numberOfEntries = 0;
       for (int i = 3; i >= 0; i--) {
         uint32_t data = file.read();
         numberOfEntries += data << i;
@@ -61,6 +62,8 @@ public:
   bool hasNext() {}
 
   uint8_t next() {
-    return file.read();
+    uint8_t temp = file.read();
+    Serial.println(temp);
+    return temp;
   }
 };
