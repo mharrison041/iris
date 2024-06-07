@@ -86,6 +86,7 @@ void testSDCardDictionary() {
 
   test("hasNext_returnsFalse_whenTextHasNotBeenSought");
   {
+    SDCardDictionary dictionary(fileName);
     dictionary.open();
 
     assertFalse(dictionary.hasNext());
