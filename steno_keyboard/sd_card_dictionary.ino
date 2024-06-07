@@ -1,6 +1,3 @@
-#include <SPI.h>
-#include <SD.h>
-
 class SDCardDictionary : public Dictionary {
 private:
   const static size_t maxLengthOfBaseFileName = 8;

@@ -1,6 +1,3 @@
-#include <SPI.h>
-#include <SD.h>
-
 void testSDCardDictionary() {
   testSuite("SDCardDictionaryTest");
 
