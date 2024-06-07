@@ -127,5 +127,17 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
+  test("hasNext_returnsFalse_whenNextHasBeenCalledTwiceAndTextDoesNotHaveRemaingBytes");
+  {
+    dictionary.open();
+    dictionary.seekTextFor(steno);
+    dictionary.next();
+    dictionary.next();
+
+    assertFalse(dictionary.hasNext());
+
+    dictionary.close();
+  }
+
   SD.remove(fileName);
 }
