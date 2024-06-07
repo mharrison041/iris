@@ -62,8 +62,6 @@ public:
   bool hasNext() {}
 
   uint8_t next() {
-    uint8_t temp = file.read();
-    Serial.println(temp);
-    return temp;
+    return file.read();
   }
 };
