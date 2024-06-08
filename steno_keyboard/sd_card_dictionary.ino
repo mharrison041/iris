@@ -34,19 +34,22 @@ public:
   }
 
   bool seekTextFor(uint8_t steno[]) {
+    size_t entry = 0;
     bool foundText = false;
-    for (size_t i = 0; i < numberOfEntries; i++) {
-      uint32_t filePosition = 4 + i * (3 + 2 * 4);
+    while (entry < numberOfEntries && !foundText) {
+      uint32_t filePosition = 4 + entry * (3 + 2 * 4);
       file.seek(filePosition);
+
       for (int j = 0; j < 3; j++) {
         uint8_t data = file.read();
         if (steno[j] != data) {
           break;
         } else if (j == 2 && steno[j] == data) {
           foundText = true;
-          break;
         }
       }
+
+      entry++;
     }
 
     if (foundText) {
