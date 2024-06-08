@@ -34,25 +34,37 @@ public:
   }
 
   bool seekTextFor(uint8_t steno[]) {
-    size_t entry = 0;
-    bool foundText = false;
-    while (entry < numberOfEntries && !foundText) {
-      uint32_t filePosition = 4 + entry * (3 + 2 * 4);
+    bool matchedSteno = false;
+    uint32_t leftEntry = 0;
+    uint32_t rightEntry = numberOfEntries - 1;
+
+    while (leftEntry <= rightEntry && !matchedSteno) {
+      uint32_t middleEntry = leftEntry + (rightEntry - leftEntry) / 2;
+      uint32_t filePosition = 4 + middleEntry * (3 + 2 * 4);
       file.seek(filePosition);
 
-      for (int j = 0; j < 3; j++) {
-        uint8_t data = file.read();
-        if (steno[j] != data) {
+      for (int i = 0; i < 3; i++) {
+        uint8_t byteFromSteno = steno[i];
+        uint8_t byteFromFile = file.read();
+
+        if (i == 2 && byteFromSteno == byteFromFile) {
+          matchedSteno = true;
           break;
-        } else if (j == 2 && steno[j] == data) {
-          foundText = true;
+        }
+
+        if (byteFromSteno < byteFromFile) {
+          rightEntry = middleEntry - 1;
+          break;
+        }
+
+        if (byteFromSteno > byteFromFile) {
+          leftEntry = middleEntry + 1;
+          break;
         }
       }
-
-      entry++;
     }
 
-    if (foundText) {
+    if (matchedSteno) {
       uint32_t intitialIndexOfText = 0;
       for (int i = 3; i >= 0; i--) {
         uint32_t data = file.read();
@@ -68,7 +80,7 @@ public:
       file.seek(intitialIndexOfText);
     }
 
-    return foundText;
+    return matchedSteno;
   }
 
   bool hasNext() {
