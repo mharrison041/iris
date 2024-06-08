@@ -77,6 +77,16 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
+  test("next_returnsFirstByteFromSecondText_whenFirstCalled");
+  {
+    dictionary.open();
+    dictionary.seekTextFor(secondSteno);
+
+    assertTrue(dictionary.next() == 74);
+
+    dictionary.close();
+  }
+
   test("next_returnsSecondByteFromFirstText_whenCalledTwice");
   {
     dictionary.open();
