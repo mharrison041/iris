@@ -87,7 +87,7 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
-  test("next_returnsSecondByteFromFirstText_whenCalledTwice");
+  test("next_returnsSecondByteFromText_whenCalledTwice");
   {
     dictionary.open();
     dictionary.seekTextFor(firstSteno);
@@ -108,7 +108,7 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
-  test("hasNext_returnsTrue_whenFirstTextHasBeenFound");
+  test("hasNext_returnsTrue_whenTextHasBeenFound");
   {
     dictionary.open();
     dictionary.seekTextFor(firstSteno);
