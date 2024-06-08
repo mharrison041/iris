@@ -21,7 +21,8 @@ void testSDCardDictionary() {
   file.write(data, 30);
   file.close();
 
-  uint8_t steno[3] = { 0, 0, 4 };
+  uint8_t firstSteno[3] = { 0, 0, 4 };
+  uint8_t unknownSteno[3] = { 0, 1, 0 };
   SDCardDictionary dictionary(fileName);
 
   test("open_returnsFalse_whenFileDoesNotExist");
@@ -38,49 +39,38 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
-  test("seekTextFor_returnsFalse_whenFileDoesNotContainSteno");
+  test("seekTextFor_returnsFalse_whenSeekingUnknownSteno");
   {
-    uint8_t steno[3] = { 0, 1, 0 };
     dictionary.open();
 
-    assertFalse(dictionary.seekTextFor(steno));
+    assertFalse(dictionary.seekTextFor(unknownSteno));
 
     dictionary.close();
   }
 
-  test("seekTextFor_returnsTrue_whenFileDoesContainSteno");
+  test("seekTextFor_returnsTrue_whenSeekingFirstSteno");
   {
     dictionary.open();
 
-    assertTrue(dictionary.seekTextFor(steno));
+    assertTrue(dictionary.seekTextFor(firstSteno));
 
     dictionary.close();
   }
 
-  test("next_returnsFirstByteFromText_whenFirstCalled");
+  test("next_returnsFirstByteFromFirstText_whenFirstCalled");
   {
     dictionary.open();
-    dictionary.seekTextFor(steno);
+    dictionary.seekTextFor(firstSteno);
 
     assertTrue(dictionary.next() == 17);
 
     dictionary.close();
   }
 
-  test("next_returnsFirstByteFromText_whenFirstCalled");
+  test("next_returnsSecondByteFromFirstText_whenCalledTwice");
   {
     dictionary.open();
-    dictionary.seekTextFor(steno);
-
-    assertTrue(dictionary.next() == 17);
-
-    dictionary.close();
-  }
-
-  test("next_returnsSecondByteFromText_whenCalledTwice");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(steno);
+    dictionary.seekTextFor(firstSteno);
     dictionary.next();
 
     assertTrue(dictionary.next() == 50);
@@ -98,10 +88,10 @@ void testSDCardDictionary() {
     dictionary.close();
   }
 
-  test("hasNext_returnsTrue_whenTextHasBeenFound");
+  test("hasNext_returnsTrue_whenFirstTextHasBeenFound");
   {
     dictionary.open();
-    dictionary.seekTextFor(steno);
+    dictionary.seekTextFor(firstSteno);
 
     assertTrue(dictionary.hasNext());
 
@@ -111,7 +101,7 @@ void testSDCardDictionary() {
   test("hasNext_returnsFalse_whenTextHasBeenSoughtAndDictionaryHasBeenClosedAndReopened");
   {
     dictionary.open();
-    dictionary.seekTextFor(steno);
+    dictionary.seekTextFor(firstSteno);
     dictionary.close();
     dictionary.open();
 
@@ -123,7 +113,7 @@ void testSDCardDictionary() {
   test("hasNext_returnsTrue_whenNextHasBeenCalledOnceAndTextStillHasRemaingBytes");
   {
     dictionary.open();
-    dictionary.seekTextFor(steno);
+    dictionary.seekTextFor(firstSteno);
     dictionary.next();
 
     assertTrue(dictionary.hasNext());
@@ -134,7 +124,7 @@ void testSDCardDictionary() {
   test("hasNext_returnsFalse_whenNextHasBeenCalledTwiceAndTextDoesNotHaveRemaingBytes");
   {
     dictionary.open();
-    dictionary.seekTextFor(steno);
+    dictionary.seekTextFor(firstSteno);
     dictionary.next();
     dictionary.next();
 
