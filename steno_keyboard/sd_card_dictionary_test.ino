@@ -22,6 +22,7 @@ void testSDCardDictionary() {
   file.close();
 
   uint8_t firstSteno[3] = { 0, 0, 4 };
+  uint8_t secondSteno[3] = { 0, 4, 0 };
   uint8_t unknownSteno[3] = { 0, 1, 0 };
   SDCardDictionary dictionary(fileName);
 
@@ -53,6 +54,15 @@ void testSDCardDictionary() {
     dictionary.open();
 
     assertTrue(dictionary.seekTextFor(firstSteno));
+
+    dictionary.close();
+  }
+
+  test("seekTextFor_returnsTrue_whenSeekingSecondSteno");
+  {
+    dictionary.open();
+
+    assertTrue(dictionary.seekTextFor(secondSteno));
 
     dictionary.close();
   }
