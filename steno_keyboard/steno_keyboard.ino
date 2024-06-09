@@ -10,6 +10,11 @@ void loop() {
 }
 
 // Classes
+class KeyScanner {
+public:
+  virtual void read(uint8_t keyStates[]) = 0;
+};
+
 class Dictionary {
 public:
   virtual bool open() = 0;
