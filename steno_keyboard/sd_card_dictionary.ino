@@ -1,13 +1,18 @@
 class SDCardDictionary : public Dictionary {
 private:
+  const static uint8_t stenoLength = 3;
+  const static uint8_t textIndexLength = 4;
+  const static uint8_t metaDataLength = 4;
+
   const static size_t maxLengthOfBaseFileName = 8;
   const static size_t maxNumberOfPeriodCharacters = 1;
   const static size_t maxLengthOfFileExtension = 3;
   const static size_t maxLengthOfFileName = maxLengthOfBaseFileName + maxNumberOfPeriodCharacters + maxLengthOfFileExtension;
+
+  uint32_t numberOfEntries = 0;
+  uint32_t finalIndexOfText = 0;
   char fileName[maxLengthOfFileName];
   File file;
-  size_t numberOfEntries = 0;
-  uint32_t finalIndexOfText = 0;
 
 public:
   SDCardDictionary(char fileName[]) {
@@ -15,14 +20,9 @@ public:
   }
 
   bool open() {
-    finalIndexOfText = 0;
     file = SD.open(fileName);
     if (file) {
-      numberOfEntries = 0;
-      for (int i = 3; i >= 0; i--) {
-        uint32_t data = file.read();
-        numberOfEntries += data << i;
-      }
+      numberOfEntries = readNextFourBytes();
       return true;
     } else {
       return false;
@@ -30,6 +30,7 @@ public:
   }
 
   void close() {
+    finalIndexOfText = 0;
     file.close();
   }
 
@@ -40,14 +41,14 @@ public:
 
     while (leftEntry <= rightEntry && !matchedSteno) {
       uint32_t middleEntry = leftEntry + (rightEntry - leftEntry) / 2;
-      uint32_t filePosition = 4 + middleEntry * (3 + 2 * 4);
+      uint32_t filePosition = metaDataLength + middleEntry * (stenoLength + 2 * textIndexLength);
       file.seek(filePosition);
 
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < stenoLength; i++) {
         uint8_t byteFromSteno = steno[i];
         uint8_t byteFromFile = file.read();
 
-        if (i == 2 && byteFromSteno == byteFromFile) {
+        if (i == stenoLength - 1 && byteFromSteno == byteFromFile) {
           matchedSteno = true;
           break;
         }
@@ -65,17 +66,9 @@ public:
     }
 
     if (matchedSteno) {
-      uint32_t intitialIndexOfText = 0;
-      for (int i = 3; i >= 0; i--) {
-        uint32_t data = file.read();
-        intitialIndexOfText += data << i;
-      }
+      uint32_t intitialIndexOfText = readNextFourBytes();
 
-      finalIndexOfText = 0;
-      for (int i = 3; i >= 0; i--) {
-        uint32_t data = file.read();
-        finalIndexOfText += data << i;
-      }
+      finalIndexOfText = readNextFourBytes();
 
       file.seek(intitialIndexOfText);
     }
@@ -89,5 +82,16 @@ public:
 
   uint8_t next() {
     return file.read();
+  }
+
+private:
+  uint32_t readNextFourBytes() {
+    uint32_t bytes = 0;
+    for (int i = 3; i >= 0; i--) {
+      uint32_t byte = file.read();
+      bytes |= byte << i;
+    }
+
+    return bytes;
   }
 };
