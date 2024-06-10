@@ -1,8 +1,3 @@
-#include <SPI.h>
-#include <SD.h>
-
-class SDCardDictionary;
-
 void setup() {
   // put your setup code here, to run once:
 }
