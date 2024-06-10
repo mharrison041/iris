@@ -1,4 +1,5 @@
 #include "testing.h"
+#include "SDCardDictionary.h"
 
 void testSDCardDictionary() {
   testSuite("SDCardDictionaryTest");
