@@ -20,7 +20,7 @@ public:
   virtual void scan(uint8_t keyStates[]) = 0;
 
   virtual bool detectedChord() = 0;
-  
+
   virtual void get(uint8_t chord[]) = 0;
 };
 
@@ -36,27 +36,3 @@ public:
 
   virtual uint8_t next() = 0;
 };
-
-// Functions for testing
-void testSuite(char testSuiteName[]) {
-  Serial.println(testSuiteName);
-}
-
-void test(char testName[]) {
-  Serial.print("    ");
-  Serial.println(testName);
-}
-
-void assertTrue(bool value) {
-  Serial.print("    - ");
-  if (value == true) {
-    Serial.println("Passed");
-  } else {
-    Serial.println("Failed");
-  }
-  Serial.print("\n");
-}
-
-void assertFalse(bool value) {
-  assertTrue(!value);
-}
