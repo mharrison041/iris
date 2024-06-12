@@ -25,4 +25,17 @@ void testEveryKeyUpChordDetector() {
 
     assertFalse(chordDetector.detectedChord());
   }
+
+  test("scan_whenAnotherKeyIsPressed_doesNotDetectChord");
+  {
+    size_t numberOfBytesForKeyStates = 3;
+    uint8_t firstKeyStates[numberOfBytesForKeyStates] = { 0, 0, 1 };
+    uint8_t secondKeyStates[numberOfBytesForKeyStates] = { 0, 0, 3 };
+    EveryKeyUpChordDetector chordDetector;
+
+    chordDetector.scan(firstKeyStates);
+    chordDetector.scan(secondKeyStates);
+
+    assertFalse(chordDetector.detectedChord());
+  }
 }
