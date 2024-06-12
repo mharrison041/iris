@@ -37,4 +37,16 @@ void testEveryKeyUpChordDetector() {
 
     assertFalse(chordDetector.detectedChord());
   }
+
+  test("scan_whenOneOfMultiplePressedKeysIsReleased_doesNotDetectChord");
+  {
+    uint8_t firstKeyStates[numberOfBytesForKeyStates] = { 0, 0, 3 };
+    uint8_t secondKeyStates[numberOfBytesForKeyStates] = { 0, 0, 1 };
+    EveryKeyUpChordDetector chordDetector;
+
+    chordDetector.scan(firstKeyStates);
+    chordDetector.scan(secondKeyStates);
+
+    assertFalse(chordDetector.detectedChord());
+  }
 }
