@@ -6,10 +6,11 @@
 
 class EveryKeyUpChordDetector : public ChordDetector {
 private:
+  const static size_t NUMBER_OF_BYTES_FOR_KEY_STATES = 3;
+
   bool keyWasPressed = false;
   bool keyIsPressed = false;
-
-  const static size_t NUMBER_OF_BYTES_FOR_KEY_STATES = 3;
+  uint8_t historyOfPressedKeyStates[NUMBER_OF_BYTES_FOR_KEY_STATES] = { 0 };
 
 public:
   void scan(const uint8_t keyStates[]);

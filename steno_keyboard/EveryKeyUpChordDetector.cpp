@@ -3,11 +3,11 @@
 void EveryKeyUpChordDetector::scan(const uint8_t keyStates[]) {
   keyWasPressed = keyIsPressed;
   keyIsPressed = false;
-  
+
   for (size_t i = 0; i < NUMBER_OF_BYTES_FOR_KEY_STATES; i++) {
+    historyOfPressedKeyStates[i] |= keyStates[i];
     if (keyStates[i] > 0) {
       keyIsPressed = true;
-      break;
     }
   }
 }
@@ -17,4 +17,7 @@ bool EveryKeyUpChordDetector::detectedChord() {
 }
 
 void EveryKeyUpChordDetector::get(uint8_t steno[]) {
+  for (size_t i = 0; i < NUMBER_OF_BYTES_FOR_KEY_STATES; i++) {
+    steno[i] = historyOfPressedKeyStates[i];
+  }
 }
