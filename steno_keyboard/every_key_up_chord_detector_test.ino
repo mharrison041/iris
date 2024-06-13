@@ -120,4 +120,23 @@ void testEveryKeyUpChordDetector() {
     chordDetector.get(actualSteno);
     assertEquals(expectedSteno, actualSteno, numberOfBytesForKeyStates);
   }
+
+  test("get_whenChordIsDetectedAfterAnotherChord_returnsStenoOfSecondChord");
+  {
+    uint8_t firstKeyStates[numberOfBytesForKeyStates] = { 7, 21, 3 };
+    uint8_t secondKeyStates[numberOfBytesForKeyStates] = { 0, 0, 0 };
+    uint8_t thirdKeyStates[numberOfBytesForKeyStates] = { 11, 4, 1 };
+    uint8_t fourthKeyStates[numberOfBytesForKeyStates] = { 0, 0, 0 };
+    EveryKeyUpChordDetector chordDetector;
+
+    chordDetector.scan(firstKeyStates);
+    chordDetector.scan(secondKeyStates);
+    chordDetector.scan(thirdKeyStates);
+    chordDetector.scan(fourthKeyStates);
+
+    uint8_t expectedSteno[] = { 11, 4, 1 };
+    uint8_t actualSteno[numberOfBytesForKeyStates] = { 0 };
+    chordDetector.get(actualSteno);
+    assertEquals(expectedSteno, actualSteno, numberOfBytesForKeyStates);
+  }
 }

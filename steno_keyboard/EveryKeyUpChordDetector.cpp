@@ -1,6 +1,11 @@
 #include "EveryKeyUpChordDetector.h"
 
 void EveryKeyUpChordDetector::scan(const uint8_t keyStates[]) {
+  bool detectedChordDuringLastScan = detectedChord();
+  if (detectedChordDuringLastScan) {
+    memset(historyOfPressedKeyStates, 0, NUMBER_OF_BYTES_FOR_KEY_STATES);
+  }
+
   keyWasPressed = keyIsPressed;
   keyIsPressed = false;
 
