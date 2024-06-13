@@ -16,9 +16,22 @@ void assertTrue(bool value) {
   } else {
     Serial.println("Failed");
   }
+
   Serial.print("\n");
 }
 
 void assertFalse(bool value) {
   assertTrue(!value);
+}
+
+void assertEquals(uint8_t array[], uint8_t otherArray[], size_t length) {
+  bool foundDifference = false;
+  for (size_t i = 0; i < length; i++) {
+    if (array[i] != otherArray[i]) {
+      foundDifference = true;
+      break;
+    }
+  }
+  
+  assertFalse(foundDifference);
 }

@@ -11,4 +11,6 @@ void assertTrue(bool value);
 
 void assertFalse(bool value);
 
+void assertEquals(uint8_t array[], uint8_t otherArray[], size_t length);
+
 #endif
