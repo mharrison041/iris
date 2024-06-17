@@ -2,4 +2,5 @@
 #include "PredefinedMacroTextEngine.h"
 
 void testPredefinedMacroTextEngine() {
+  testSuite("PredefinedMacroTextEngine");
 }
