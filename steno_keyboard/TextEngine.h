@@ -4,13 +4,13 @@
 
 class TextEngine {
 public:
-  void setupBeforeText();
+  virtual void setupBeforeText() = 0;
 
-  void process(uint8_t byte);
+  virtual void process(uint8_t byte) = 0;
 
-  bool hasNext();
+  virtual bool hasNext() = 0;
 
-  uint8_t next();
+  virtual uint8_t next() = 0;
 
-  void cleanupAfterText();
+  virtual void cleanupAfterText() = 0;
 };
