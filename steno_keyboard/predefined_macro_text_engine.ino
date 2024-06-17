@@ -3,4 +3,9 @@
 
 void testPredefinedMacroTextEngine() {
   testSuite("PredefinedMacroTextEngine");
+
+  test("initialize");
+  {
+    PredefinedMacroTextEngine textEngine;
+  }
 }
