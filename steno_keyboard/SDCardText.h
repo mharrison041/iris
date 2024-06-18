@@ -5,7 +5,6 @@
 
 class SDCardText : public Text {
 private:
-  uint32_t currentPosition;
   uint32_t finalPosition;
   File file;
 

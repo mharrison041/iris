@@ -1,17 +1,13 @@
 #include "SDCardText.h"
 
 SDCardText::SDCardText(uint32_t initialPosition, uint32_t finalPosition, File file) {
-  this->currentPosition = initialPosition;
+  file.seek(min(file.size(), initialPosition));
   this->finalPosition = finalPosition;
   this->file = file;
 }
 
 bool SDCardText::hasNext() {
-  if (currentPosition >= file.size()) {
-    return false;
-  } else {
-    return currentPosition < finalPosition;
-  }
+  return file.position() < min(file.size(), finalPosition);
 }
 
 uint8_t SDCardText::next() {
