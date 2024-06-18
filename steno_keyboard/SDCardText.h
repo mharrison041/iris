@@ -5,9 +5,9 @@
 
 class SDCardText : public Text {
 public:
-  SDCardText(uint32_t initialPosition, uint32_t finalPosition, File file) {}
+  SDCardText(uint32_t initialPosition, uint32_t finalPosition, File file);
 
-  bool hasNext() {}
+  bool hasNext();
 
-  uint8_t next() {}
+  uint8_t next();
 };
