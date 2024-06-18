@@ -4,6 +4,12 @@
 void testSDCardText() {
   testSuite("SDCardText");
 
+  uint8_t slaveSelectPin = 4;
+  if (!SD.begin(slaveSelectPin)) {
+    Serial.println("    Failed to connect to SD card");
+    return;
+  }
+
   char fileNameOfTestFile[] = "test";
   File testFile = SD.open(fileNameOfTestFile, FILE_WRITE);
   testFile.write("abcdefghijklmnopqrstuvwxyz");
@@ -36,6 +42,18 @@ void testSDCardText() {
     uint32_t initialPosition = 1;
     uint32_t finalPosition = 0;
     File testFile = SD.open(fileNameOfTestFile);
+    SDCardText text(initialPosition, finalPosition, testFile);
+
+    assertFalse(text.hasNext());
+
+    testFile.close();
+  }
+
+  test("hasNext_returnsFalse_whenInitialPositionIsEqualToSizeOfFile");
+  {
+    File testFile = SD.open(fileNameOfTestFile);
+    uint32_t initialPosition = testFile.size();
+    uint32_t finalPosition = initialPosition + 1;
     SDCardText text(initialPosition, finalPosition, testFile);
 
     assertFalse(text.hasNext());
