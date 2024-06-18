@@ -1,8 +1,8 @@
 #pragma once
 
-class ChordDetector {
+class ChordScanner {
 public:
-  virtual void scan(const uint8_t keyStates[]) = 0;
+  virtual void scan(const uint8_t keys[]) = 0;
 
   virtual bool detectedChord() = 0;
 
