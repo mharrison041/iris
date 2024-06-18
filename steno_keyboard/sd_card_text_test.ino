@@ -61,6 +61,18 @@ void testSDCardText() {
     testFile.close();
   }
 
+  test("hasNext_returnsFalse_whenInitialPositionIsGreaterThanSizeOfFile");
+  {
+    File testFile = SD.open(fileNameOfTestFile);
+    uint32_t initialPosition = testFile.size() + 1;
+    uint32_t finalPosition = initialPosition + 1;
+    SDCardText text(initialPosition, finalPosition, testFile);
+
+    assertFalse(text.hasNext());
+
+    testFile.close();
+  }
+
   test("hasNext_returnsTrue_whenInitialPositionIsLessThanFinalPosition");
   {
     uint32_t initialPosition = 0;

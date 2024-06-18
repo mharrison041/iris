@@ -7,7 +7,7 @@ SDCardText::SDCardText(uint32_t initialPosition, uint32_t finalPosition, File fi
 }
 
 bool SDCardText::hasNext() {
-  if (currentPosition == file.size()) {
+  if (currentPosition >= file.size()) {
     return false;
   } else {
     return currentPosition < finalPosition;
