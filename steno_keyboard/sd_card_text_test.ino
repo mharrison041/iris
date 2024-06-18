@@ -73,6 +73,20 @@ void testSDCardText() {
     testFile.close();
   }
 
+  test("hasNext_returnsFalse_whenLastByteOfRangeHasBeenRead");
+  {
+    uint32_t initialPosition = 1;
+    uint32_t finalPosition = 0;
+    File testFile = SD.open(fileNameOfTestFile);
+    SDCardText text(initialPosition, finalPosition, testFile);
+
+    (void)text.next();
+
+    assertFalse(text.hasNext());
+
+    testFile.close();
+  }
+
   test("hasNext_returnsTrue_whenInitialPositionIsLessThanFinalPosition");
   {
     uint32_t initialPosition = 0;
