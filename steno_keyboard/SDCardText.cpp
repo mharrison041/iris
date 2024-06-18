@@ -15,4 +15,5 @@ bool SDCardText::hasNext() {
 }
 
 uint8_t SDCardText::next() {
+  return file.read();
 }

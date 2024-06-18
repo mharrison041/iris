@@ -85,5 +85,19 @@ void testSDCardText() {
     testFile.close();
   }
 
+  test("next_returnsFirstByteOfRange_whenInitiallyCalled");
+  {
+    uint32_t initialPosition = 0;
+    uint32_t finalPosition = 1;
+    File testFile = SD.open(fileNameOfTestFile);
+    SDCardText text(initialPosition, finalPosition, testFile);
+
+    uint8_t expectedByte = 'a';
+    uint8_t actualByte = text.next();
+    assertTrue(expectedByte == actualByte);
+
+    testFile.close();
+  }
+
   SD.remove(fileNameOfTestFile);
 }
