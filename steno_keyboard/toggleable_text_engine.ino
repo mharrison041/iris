@@ -31,6 +31,14 @@ public:
 void testToggleableTextEngine() {
   testSuite("ToggleableTextEngine");
 
+  uint8_t textEngineMetaData = 0;
+  uint8_t textMetaData = 0;
+  uint8_t textData = 122;
+
+  uint8_t otherTextEngineMetaData = 0;
+  uint8_t otherTextMetaData = 0;
+  uint8_t otherTextData = 97;
+
   test("initialize");
   {
     TextEngine* textEngine = &ToggleableTextEngine();
@@ -49,9 +57,6 @@ void testToggleableTextEngine() {
 
   test("hasNext_returnsTrue_whenTextIsNotEmpty");
   {
-    uint8_t textEngineMetaData = 0;
-    uint8_t textMetaData = 0;
-    uint8_t textData = 122;
     TextFake text(textEngineMetaData, textMetaData, textData);
     ToggleableTextEngine textEngine;
 
@@ -62,9 +67,6 @@ void testToggleableTextEngine() {
 
   test("hasNext_returnsFalse_whenTextHasBeenCompletelyProcessed");
   {
-    uint8_t textEngineMetaData = 0;
-    uint8_t textMetaData = 0;
-    uint8_t textData = 122;
     TextFake text(textEngineMetaData, textMetaData, textData);
     ToggleableTextEngine textEngine;
 
@@ -76,9 +78,6 @@ void testToggleableTextEngine() {
 
   test("next_returnsFirstByteOfTextAsPrintKeyEvent_whenInitiallyCalledWhileProcessingTextLiteral");
   {
-    uint8_t textEngineMetaData = 0;
-    uint8_t textMetaData = 0;
-    uint8_t textData = 122;
     TextFake text(textEngineMetaData, textMetaData, textData);
     ToggleableTextEngine textEngine;
 
@@ -93,13 +92,7 @@ void testToggleableTextEngine() {
 
   test("hasNext_returnsTrue_whenCalledOneTimeMoreThanLengthOfTextWhileProcessingSecondTextLiteral");
   {
-    uint8_t textEngineMetaData = 0;
-    uint8_t textMetaData = 0;
-    uint8_t textData = 122;
     TextFake text(textEngineMetaData, textMetaData, textData);
-    uint8_t otherTextEngineMetaData = 0;
-    uint8_t otherTextMetaData = 0;
-    uint8_t otherTextData = 97;
     TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
     ToggleableTextEngine textEngine;
 
@@ -113,16 +106,13 @@ void testToggleableTextEngine() {
 
   test("hasNext_returnsFalse_whenProcessingSecondTextThatIsEmpty");
   {
-    uint8_t textEngineMetaData = 0;
-    uint8_t textMetaData = 0;
-    uint8_t textData = 122;
     TextFake text(textEngineMetaData, textMetaData, textData);
-    TextFake otherText;
+    TextFake emptyText;
     ToggleableTextEngine textEngine;
 
     textEngine.process(&text);
     (void)textEngine.next();
-    textEngine.process(&otherText);
+    textEngine.process(&emptyText);
 
     assertFalse(textEngine.hasNext());
   }
