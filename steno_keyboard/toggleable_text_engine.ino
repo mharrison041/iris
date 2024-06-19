@@ -131,7 +131,7 @@ void testToggleableTextEngine() {
     assertFalse(textEngine.hasNext());
   }
 
-  test("next_returnsPrintKeyEventWithWhiteSpace_whenInitiallyCalledWhileProccessingSecondTextLiteral");
+  test("next_returnsPrintKeyEventWithWhiteSpace_whenInitiallyCalledWhileProcessingSecondTextLiteral");
   {
     TextFake text(textEngineMetaData, textMetaData, textData);
     TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
@@ -142,6 +142,24 @@ void testToggleableTextEngine() {
     textEngine.process(&otherText);
 
     KeyEvent expectedKeyEvent(32, PressType::Print);
+    KeyEvent actualKeyEvent = textEngine.next();
+
+    assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
+               && expectedKeyEvent.pressType == actualKeyEvent.pressType);
+  }
+
+  test("next_returnsPrintKeyEventWithFirstKeyCodeOfText_whenCalledTwiceWhileProcessingSecondTextLiteral");
+  {
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+    textEngine.process(&otherText);
+    (void)textEngine.next();
+
+    KeyEvent expectedKeyEvent(otherTextData, PressType::Print);
     KeyEvent actualKeyEvent = textEngine.next();
 
     assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
