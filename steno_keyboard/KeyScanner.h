@@ -2,5 +2,5 @@
 
 class KeyScanner {
 public:
-  virtual void read(uint8_t keyStates[]) = 0;
+  virtual void read(uint8_t keys[]) = 0;
 };
