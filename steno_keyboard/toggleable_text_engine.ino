@@ -110,4 +110,20 @@ void testToggleableTextEngine() {
 
     assertTrue(textEngine.hasNext());
   }
+
+  test("hasNext_returnsFalse_whenProcessingSecondTextThatIsEmpty");
+  {
+    uint8_t textEngineMetaData = 0;
+    uint8_t textMetaData = 0;
+    uint8_t textData = 122;
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    TextFake otherText;
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+    textEngine.process(&otherText);
+
+    assertFalse(textEngine.hasNext());
+  }
 }

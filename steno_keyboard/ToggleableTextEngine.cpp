@@ -9,14 +9,14 @@ void ToggleableTextEngine::process(Text *text) {
 }
 
 bool ToggleableTextEngine::hasNext() {
-  if (numberOfProcessedTexts > 1 && numberOfProcessedBytesForCurrentText == 0) {
-    numberOfProcessedBytesForCurrentText++;
-    return true;
-  } else {
-    return text->hasNext();
-  }
+  return text->hasNext();
 }
 
 KeyEvent ToggleableTextEngine::next() {
-  return KeyEvent(text->next(), PressType::Print);
+  if (numberOfProcessedTexts > 1 && numberOfProcessedBytesForCurrentText == 0) {
+    numberOfProcessedBytesForCurrentText++;
+    return KeyEvent(0, PressType::Print);
+  } else {
+    return KeyEvent(text->next(), PressType::Print);
+  }
 }
