@@ -73,4 +73,21 @@ void testToggleableTextEngine() {
 
     assertFalse(textEngine.hasNext());
   }
+
+  test("next_returnsFirstByteOfTextAsPrintKeyEvent_whenInitiallyCalledWhileProcessingTextLiteral");
+  {
+    uint8_t textEngineMetaData = 0;
+    uint8_t textMetaData = 0;
+    uint8_t textData = 122;
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+
+    KeyEvent expectedKeyEvent(122, PressType::Print);
+    KeyEvent actualKeyEvent = textEngine.next();
+
+    assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
+               && expectedKeyEvent.pressType == actualKeyEvent.pressType);
+  }
 }

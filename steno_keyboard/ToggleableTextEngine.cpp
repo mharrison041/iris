@@ -11,5 +11,5 @@ bool ToggleableTextEngine::hasNext() {
 }
 
 KeyEvent ToggleableTextEngine::next() {
-  text->next();
+  return KeyEvent(text->next(), PressType::Print);
 }
