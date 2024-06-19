@@ -1,27 +1,21 @@
 #include "SDCardDictionary.h"
 
 SDCardDictionary::SDCardDictionary(char fileName[]) {
-  numberOfEntries = 0;
-  finalIndexOfText = 0;
-  memcpy(this->fileName, fileName, strlen(fileName) + 1);
-}
-
-bool SDCardDictionary::open() {
   file = SD.open(fileName);
   if (file) {
     numberOfEntries = readNextFourBytes();
-    return true;
   } else {
-    return false;
+    numberOfEntries = 0;
   }
+
+  memcpy(this->fileName, fileName, strlen(fileName) + 1);
 }
 
-void SDCardDictionary::close() {
-  finalIndexOfText = 0;
+SDCardDictionary::~SDCardDictionary() {
   file.close();
 }
 
-bool SDCardDictionary::seekTextFor(uint8_t steno[]) {
+Text* SDCardDictionary::getTextFor(uint8_t steno[]) {
   bool matchedSteno = false;
   uint32_t leftEntry = 0;
   uint32_t rightEntry = numberOfEntries - 1;
@@ -52,23 +46,13 @@ bool SDCardDictionary::seekTextFor(uint8_t steno[]) {
     }
   }
 
-  if (matchedSteno) {
+  if (!matchedSteno) {
+    return new SDCardText(0, 0, file);
+  } else {
     uint32_t intitialIndexOfText = readNextFourBytes();
-
-    finalIndexOfText = readNextFourBytes();
-
-    file.seek(intitialIndexOfText);
+    uint32_t finalIndexOfText = readNextFourBytes();
+    return new SDCardText(intitialIndexOfText, finalIndexOfText, file);
   }
-
-  return matchedSteno;
-}
-
-bool SDCardDictionary::hasNext() {
-  return file.position() < finalIndexOfText;
-}
-
-uint8_t SDCardDictionary::next() {
-  return file.read();
 }
 
 uint32_t SDCardDictionary::readNextFourBytes() {

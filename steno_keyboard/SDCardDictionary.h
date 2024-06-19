@@ -1,8 +1,7 @@
 #pragma once
-
 #include <SPI.h>
 #include <SD.h>
-
+#include "SDCardText.h"
 #include "Dictionary.h"
 
 class SDCardDictionary : public Dictionary {
@@ -17,22 +16,15 @@ private:
   const static size_t maxLengthOfFileName = maxLengthOfBaseFileName + maxNumberOfPeriodCharacters + maxLengthOfFileExtension;
 
   uint32_t numberOfEntries;
-  uint32_t finalIndexOfText;
   char fileName[maxLengthOfFileName];
   File file;
 
 public:
   SDCardDictionary(char fileName[]);
 
-  bool open();
+  ~SDCardDictionary();
 
-  void close();
-
-  bool seekTextFor(uint8_t steno[]);
-
-  bool hasNext();
-
-  uint8_t next();
+  Text* getTextFor(uint8_t steno[]);
 
 private:
   uint32_t readNextFourBytes();

@@ -29,131 +29,58 @@ void testSDCardDictionary() {
   uint8_t unknownSteno[3] = { 0, 1, 0 };
   SDCardDictionary dictionary(fileName);
 
-  test("open_returnsFalse_whenFileDoesNotExist");
+  test("getTextFor_returnsEmptyText_whenFileCannotBeOpened");
   {
-    SDCardDictionary dictionary("void");
-
-    assertFalse(dictionary.open());
+    Text* text = dictionary.getTextFor("notTest");
+    assertFalse(text->hasNext());
+    delete text;
   }
 
-  test("open_returnsTrue_whenFileDoesExist");
+  test("getTextFor_returnsEmptyText_whenSeekingUnknownSteno");
   {
-    assertTrue(dictionary.open());
-
-    dictionary.close();
+    Text* text = dictionary.getTextFor(unknownSteno);
+    assertFalse(text->hasNext());
+    delete text;
   }
 
-  test("seekTextFor_returnsFalse_whenSeekingUnknownSteno");
+  test("getTextFor_returnsFirstText_whenSeekingFirstSteno");
   {
-    dictionary.open();
+    Text* text = dictionary.getTextFor(firstSteno);
 
-    assertFalse(dictionary.seekTextFor(unknownSteno));
+    bool matchedText = true;
+    size_t numberOfBytes = 2;
+    uint8_t expectedBytes[numberOfBytes] = { 17, 50 };
 
-    dictionary.close();
+    for (size_t i = 0; i < numberOfBytes; i++) {
+      if (!text->hasNext() || text->next() != expectedBytes[i]) {
+        matchedText = false;
+        break;
+      }
+    }
+
+    assertTrue(matchedText);
+
+    delete text;
   }
 
-  test("seekTextFor_returnsTrue_whenSeekingFirstSteno");
+  test("getTextFor_returnsSecondText_whenSeekingSecondSteno");
   {
-    dictionary.open();
+    Text* text = dictionary.getTextFor(secondSteno);
 
-    assertTrue(dictionary.seekTextFor(firstSteno));
+    bool matchedText = true;
+    size_t numberOfBytes = 2;
+    uint8_t expectedBytes[numberOfBytes] = { 74, 25 };
 
-    dictionary.close();
-  }
+    for (size_t i = 0; i < numberOfBytes; i++) {
+      if (!text->hasNext() || text->next() != expectedBytes[i]) {
+        matchedText = false;
+        break;
+      }
+    }
 
-  test("seekTextFor_returnsTrue_whenSeekingSecondSteno");
-  {
-    dictionary.open();
+    assertTrue(matchedText);
 
-    assertTrue(dictionary.seekTextFor(secondSteno));
-
-    dictionary.close();
-  }
-
-  test("next_returnsFirstByteFromFirstText_whenFirstCalled");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(firstSteno);
-
-    assertTrue(dictionary.next() == 17);
-
-    dictionary.close();
-  }
-
-  test("next_returnsFirstByteFromSecondText_whenFirstCalled");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(secondSteno);
-
-    assertTrue(dictionary.next() == 74);
-
-    dictionary.close();
-  }
-
-  test("next_returnsSecondByteFromText_whenCalledTwice");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(firstSteno);
-    dictionary.next();
-
-    assertTrue(dictionary.next() == 50);
-
-    dictionary.close();
-  }
-
-  test("hasNext_returnsFalse_whenTextHasNotBeenSought");
-  {
-    SDCardDictionary dictionary(fileName);
-    dictionary.open();
-
-    assertFalse(dictionary.hasNext());
-
-    dictionary.close();
-  }
-
-  test("hasNext_returnsTrue_whenTextHasBeenFound");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(firstSteno);
-
-    assertTrue(dictionary.hasNext());
-
-    dictionary.close();
-  }
-
-  test("hasNext_returnsFalse_whenTextHasBeenSoughtAndDictionaryHasBeenClosedAndReopened");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(firstSteno);
-    dictionary.close();
-    dictionary.open();
-
-    assertFalse(dictionary.hasNext());
-
-    dictionary.close();
-  }
-
-  test("hasNext_returnsTrue_whenNextHasBeenCalledOnceAndTextStillHasRemaingBytes");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(firstSteno);
-    dictionary.next();
-
-    assertTrue(dictionary.hasNext());
-
-    dictionary.close();
-  }
-
-  test("hasNext_returnsFalse_whenNextHasBeenCalledTwiceAndTextDoesNotHaveRemaingBytes");
-  {
-    dictionary.open();
-    dictionary.seekTextFor(firstSteno);
-    dictionary.next();
-    dictionary.next();
-
-    assertFalse(dictionary.hasNext());
-
-    dictionary.close();
+    delete text;
   }
 
   SD.remove(fileName);
