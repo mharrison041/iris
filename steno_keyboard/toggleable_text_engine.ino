@@ -90,4 +90,24 @@ void testToggleableTextEngine() {
     assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
                && expectedKeyEvent.pressType == actualKeyEvent.pressType);
   }
+
+  test("hasNext_returnsTrue_whenCalledOneTimeMoreThanLengthOfTextWhileProcessingSecondTextLiteral");
+  {
+    uint8_t textEngineMetaData = 0;
+    uint8_t textMetaData = 0;
+    uint8_t textData = 122;
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    uint8_t otherTextEngineMetaData = 0;
+    uint8_t otherTextMetaData = 0;
+    uint8_t otherTextData = 97;
+    TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+    textEngine.process(&otherText);
+    (void)textEngine.next();
+
+    assertTrue(textEngine.hasNext());
+  }
 }
