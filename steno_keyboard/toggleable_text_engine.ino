@@ -130,4 +130,21 @@ void testToggleableTextEngine() {
 
     assertFalse(textEngine.hasNext());
   }
+
+  test("next_returnsPrintKeyEventWithWhiteSpace_whenInitiallyCalledWhileProccessingSecondTextLiteral");
+  {
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+    textEngine.process(&otherText);
+
+    KeyEvent expectedKeyEvent(32, PressType::Print);
+    KeyEvent actualKeyEvent = textEngine.next();
+
+    assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
+               && expectedKeyEvent.pressType == actualKeyEvent.pressType);
+  }
 }

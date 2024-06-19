@@ -17,7 +17,7 @@ bool ToggleableTextEngine::hasNext() {
 KeyEvent ToggleableTextEngine::next() {
   if (numberOfProcessedTexts > 1 && numberOfProcessedBytesForCurrentText == 0) {
     numberOfProcessedBytesForCurrentText++;
-    return KeyEvent(0, PressType::Print);
+    return KeyEvent(keyCodeForLink, PressType::Print);
   } else {
     return KeyEvent(text->next(), PressType::Print);
   }
