@@ -165,4 +165,19 @@ void testToggleableTextEngine() {
     assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
                && expectedKeyEvent.pressType == actualKeyEvent.pressType);
   }
+
+  test("hasNext_returnsFalse_whenAllKeyCodesOfSecondTextHaveBeenRead");
+  {
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+    textEngine.process(&otherText);
+    (void)textEngine.next();
+    (void)textEngine.next();
+
+    assertFalse(textEngine.hasNext());
+  }
 }
