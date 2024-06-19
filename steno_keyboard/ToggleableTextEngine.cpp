@@ -2,10 +2,12 @@
 
 void ToggleableTextEngine::process(Text *text) {
   this->text = text;
-  text->next();
-  text->next();
-  numberOfProcessedTexts++;
-  numberOfProcessedBytesForCurrentText = 0;
+  if (text->hasNext()) {
+    text->next();
+    text->next();
+    numberOfProcessedTexts++;
+    numberOfProcessedBytesForCurrentText = 0;
+  }
 }
 
 bool ToggleableTextEngine::hasNext() {

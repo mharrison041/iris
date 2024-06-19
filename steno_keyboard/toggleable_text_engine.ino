@@ -116,4 +116,18 @@ void testToggleableTextEngine() {
 
     assertFalse(textEngine.hasNext());
   }
+
+  test("hasNext_returnsFalse_whenCalledOneTimeMoreThanLengthOfTextWhileProcessingSecondTextLiteralIfFirstTextWasEmpty");
+  {
+    TextFake emptyText;
+    TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&emptyText);
+    (void)textEngine.next();
+    textEngine.process(&otherText);
+    (void)textEngine.next();
+
+    assertFalse(textEngine.hasNext());
+  }
 }
