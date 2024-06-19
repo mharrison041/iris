@@ -1,16 +1,13 @@
 #pragma once
-
-#include "Arduino.h"
+#include <Arduino.h>
+#include "Text.h"
+#include "KeyEvent.h"
 
 class TextEngine {
 public:
-  virtual void setupBeforeText() = 0;
-
-  virtual void process(uint8_t byte) = 0;
+  virtual void process(Text* text) = 0;
 
   virtual bool hasNext() = 0;
 
-  virtual uint8_t next() = 0;
-
-  virtual void cleanupAfterText() = 0;
+  virtual KeyEvent next() = 0;
 };
