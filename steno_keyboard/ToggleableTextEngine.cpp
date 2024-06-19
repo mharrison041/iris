@@ -2,6 +2,8 @@
 
 void ToggleableTextEngine::process(Text *text) {
   this->text = text;
+  text->next();
+  text->next();
 }
 
 bool ToggleableTextEngine::hasNext() {
@@ -9,4 +11,5 @@ bool ToggleableTextEngine::hasNext() {
 }
 
 KeyEvent ToggleableTextEngine::next() {
+  text->next();
 }
