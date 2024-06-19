@@ -216,4 +216,20 @@ void testToggleableTextEngine() {
 
     assertTrue(textEngine.hasNext());
   }
+
+  test("next_returnsPrintKeyEventWithSecondByteOfLongText_whenCalledTwice");
+  {
+    uint8_t firstByte = 98;
+    uint8_t secondByte = 99;
+    LongTextFake text(textEngineMetaData, textMetaData, firstByte, secondByte);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+
+    KeyEvent expectedKeyEvent(secondByte, PressType::Print);
+    KeyEvent actualKeyEvent = textEngine.next();
+    assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
+               && expectedKeyEvent.pressType == actualKeyEvent.pressType);
+  }
 }
