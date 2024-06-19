@@ -3,9 +3,9 @@
 void ToggleableTextEngine::process(Text *text) {
   this->text = text;
   if (text->hasNext()) {
-    text->next();
-    text->next();
-    numberOfProcessedTexts++;
+    (void)text->next();
+    (void)text->next();
+    numberOfProcessedTexts++;  // bug: an overflow that results in a text not being properly linked to its preceding text; however, assuming normal use, this would requires a user to chord for about 76 years without restarting their device for this to occur
     numberOfProcessedBytesForCurrentText = 0;
   }
 }

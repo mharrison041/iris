@@ -28,6 +28,29 @@ public:
   }
 };
 
+class LongTextFake : public Text {
+private:
+  static const size_t NUMBER_OF_BYTES_FOR_TEXT = 4;
+  uint8_t bytes[NUMBER_OF_BYTES_FOR_TEXT] = { 0 };
+  size_t counter = 0;
+
+public:
+  LongTextFake(uint8_t textEngineMetaData, uint8_t textMetaData, uint8_t firstByte, uint8_t secondByte) {
+    bytes[0] = textEngineMetaData;
+    bytes[1] = textMetaData;
+    bytes[2] = firstByte;
+    bytes[3] = secondByte;
+  }
+
+  bool hasNext() {
+    return counter < NUMBER_OF_BYTES_FOR_TEXT;
+  }
+
+  uint8_t next() {
+    return bytes[counter++];
+  }
+};
+
 void testToggleableTextEngine() {
   testSuite("ToggleableTextEngine");
 
@@ -179,5 +202,18 @@ void testToggleableTextEngine() {
     (void)textEngine.next();
 
     assertFalse(textEngine.hasNext());
+  }
+
+  test("hasNext_returnsTrue_whenOnlyFirstByteOfLongTextHasBeenRead");
+  {
+    uint8_t firstByte = 98;
+    uint8_t secondByte = 99;
+    LongTextFake text(textEngineMetaData, textMetaData, firstByte, secondByte);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+
+    assertTrue(textEngine.hasNext());
   }
 }
