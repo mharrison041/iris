@@ -1,7 +1,12 @@
 #include "ToggleableTextEngine.h"
 
-void ToggleableTextEngine::process(Text *text) {}
+void ToggleableTextEngine::process(Text *text) {
+  this->text = text;
+}
 
 bool ToggleableTextEngine::hasNext() {
-  return false;
+  return text->hasNext();
+}
+
+KeyEvent ToggleableTextEngine::next() {
 }

@@ -46,4 +46,17 @@ void testToggleableTextEngine() {
 
     assertFalse(textEngine.hasNext());
   }
+
+  test("hasNext_returnsTrue_whenTextIsNotEmpty");
+  {
+    uint8_t textEngineMetaData = 0;
+    uint8_t textMetaData = 0;
+    uint8_t textData = 122;
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+
+    assertTrue(textEngine.hasNext());
+  }
 }
