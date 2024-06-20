@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
-#include "Text.h"
-#include "KeyEvent.h"
+#include "../text/Text.h"
+#include "../keyevent/KeyEvent.h"
 
 class TextEngine {
 public:

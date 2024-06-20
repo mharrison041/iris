@@ -1,7 +1,5 @@
 #pragma once
-
 #include <Arduino.h>
-
 #include "ChordScanner.h"
 
 class EveryKeyUpChordScanner : public ChordScanner {

@@ -1,7 +1,7 @@
 #pragma once
 #include <SPI.h>
 #include <SD.h>
-#include "SDCardText.h"
+#include "../text/SDCardText.h"
 #include "Dictionary.h"
 
 class SDCardDictionary : public Dictionary {

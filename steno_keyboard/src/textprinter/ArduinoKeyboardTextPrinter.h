@@ -1,8 +1,8 @@
 #pragma once
 #include "Keyboard.h"
-#include "TextEngine.h"
-#include "KeyEvent.h"
-#include "TextPrinter.h"
+#include "../textengine/TextEngine.h"
+#include "../keyevent/KeyEvent.h"
+#include "../textprinter/TextPrinter.h"
 
 class ArduinoKeyboardTextPrinter : public TextPrinter {
 private:

@@ -1,6 +1,5 @@
 #include "testing.h"
-#include "TextEngine.h"
-#include "ToggleableTextEngine.h"
+#include "src/textengine/ToggleableTextEngine.h"
 
 class TextFake : public Text {
 private:

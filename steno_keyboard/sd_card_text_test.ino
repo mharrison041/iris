@@ -1,5 +1,5 @@
 #include "testing.h"
-#include "SDCardText.h"
+#include "src/text/SDCardText.h"
 
 void testSDCardText() {
   testSuite("SDCardText");

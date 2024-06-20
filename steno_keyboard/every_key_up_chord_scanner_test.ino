@@ -1,5 +1,5 @@
 #include "testing.h"
-#include "EveryKeyUpChordScanner.h"
+#include "src/chordscanner/EveryKeyUpChordScanner.h"
 
 void testEveryKeyUpChordScanner() {
   testSuite("EveryKeyUpChordScanner");
