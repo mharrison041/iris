@@ -286,4 +286,25 @@ void testToggleableTextEngine() {
     assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
                && expectedKeyEvent.pressType == actualKeyEvent.pressType);
   }
+
+  test("next_returnsPrintEventWithWhitespace_whenInitiallyProcessingThirdTextAfterSecondTextIgnoredPrecedingLink");
+  {
+    uint8_t otherTextMetaData = 2;
+    TextFake firstText(textEngineMetaData, textMetaData, textData);
+    TextFake secondText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
+    TextFake thirdText(otherTextEngineMetaData, textMetaData, otherTextData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&firstText);
+    (void)textEngine.next();
+    textEngine.process(&secondText);
+    (void)textEngine.next();
+    textEngine.process(&thirdText);
+
+    uint8_t asciiForWhitespace = 32;
+    KeyEvent expectedKeyEvent(asciiForWhitespace, PressType::Print);
+    KeyEvent actualKeyEvent = textEngine.next();
+    assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
+               && expectedKeyEvent.pressType == actualKeyEvent.pressType);
+  }
 }
