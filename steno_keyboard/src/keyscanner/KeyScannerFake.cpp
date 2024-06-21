@@ -1,15 +1,29 @@
 #include "KeyScannerFake.h"
 
-KeyScannerFake::KeyScannerFake(uint8_t keys[], size_t numberOfKeys) {
-  this->keys = new uint8_t[numberOfKeys];
+KeyScannerFake::KeyScannerFake(size_t numberOfKeys, size_t maxNumberOfKeyStates) {
   this->numberOfKeys = numberOfKeys;
-  memcpy(this->keys, &keys[0], numberOfKeys);
+  this->maxNumberOfKeyStates = maxNumberOfKeyStates;
+  keyStates = new uint8_t[numberOfKeys * maxNumberOfKeyStates]{ 0 };
 }
 
 KeyScannerFake::~KeyScannerFake() {
-  delete[] keys;
+  delete[] keyStates;
+}
+
+void KeyScannerFake::add(const uint8_t keys[]) {
+  if(addingIndex == maxNumberOfKeyStates) {
+    addingIndex = 0;
+  }
+
+  memcpy(&keyStates[addingIndex * numberOfKeys], &keys[0], numberOfKeys);
+  addingIndex++;
 }
 
 void KeyScannerFake::read(uint8_t keys[]) {
-  memcpy(&keys[0], this->keys, numberOfKeys);
+  if(readingIndex == maxNumberOfKeyStates) {
+    readingIndex = 0;
+  }
+
+  memcpy(&keys[0], &keyStates[readingIndex * numberOfKeys], numberOfKeys);
+  readingIndex++;
 }
