@@ -5,7 +5,7 @@ class ToggleableTextEngine : public TextEngine {
 private:
   Text* text = NULL;
   uint32_t numberOfProcessedTexts = 0;
-  uint32_t numberOfProcessedBytesForCurrentText = 0;
+  bool outputtedKeyEventForCurrentText = false;
   const uint8_t keyCodeForLink = 32;
   bool skippingLink = false;
 
