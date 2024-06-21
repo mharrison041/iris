@@ -20,6 +20,7 @@ KeyEvent ToggleableTextEngine::next() {
   if (numberOfProcessedTexts > 1 && numberOfProcessedBytesForCurrentText == 0) {
     if(skippingLink) {
       numberOfProcessedBytesForCurrentText++;
+      skippingLink = false;
       return KeyEvent(text->next(), PressType::Print);
     } else {
       numberOfProcessedBytesForCurrentText++;
