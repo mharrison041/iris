@@ -59,7 +59,7 @@ uint32_t SDCardDictionary::readNextFourBytes() {
   uint32_t bytes = 0;
   for (int i = 3; i >= 0; i--) {
     uint32_t byte = file.read();
-    bytes |= byte << i;
+    bytes |= byte << (i * 8);
   }
 
   return bytes;
