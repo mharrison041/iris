@@ -3,13 +3,16 @@
 
 class EveryKeyUpChordScanner : public ChordScanner {
 private:
-  const static size_t NUMBER_OF_BYTES_FOR_KEYS = 3;
-
   bool keyWasPressed = false;
   bool keyIsPressed = false;
-  uint8_t historyOfPressedKeyStates[NUMBER_OF_BYTES_FOR_KEYS] = { 0 };
+  uint8_t numberOfBytesToEncodeKeys = 0;
+  uint8_t* historyOfPressedKeyStates = NULL;
 
 public:
+  EveryKeyUpChordScanner(size_t numberOfKeys);
+
+  ~EveryKeyUpChordScanner();
+
   void scan(const uint8_t keys[]);
 
   bool detectedChord();

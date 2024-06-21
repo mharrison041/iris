@@ -4,12 +4,13 @@
 void testEveryKeyUpChordScanner() {
   testSuite("EveryKeyUpChordScanner");
 
+  const size_t numberOfKeys = 23;
   const size_t numberOfBytesForKeys = 3;
 
   test("scan_whenKeyHasNotBeenPressed_doesNotDetectChord");
   {
     uint8_t keys[numberOfBytesForKeys] = { 0, 0, 0 };
-    EveryKeyUpChordScanner chordScanner;
+    EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(keys);
 
@@ -19,7 +20,7 @@ void testEveryKeyUpChordScanner() {
   test("scan_whenKeyIsPressed_doesNotDetectChord");
   {
     uint8_t keys[numberOfBytesForKeys] = { 0, 0, 1 };
-   EveryKeyUpChordScanner chordScanner;
+   EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(keys);
 
@@ -30,7 +31,7 @@ void testEveryKeyUpChordScanner() {
   {
     uint8_t firstKeyStates[numberOfBytesForKeys] = { 0, 0, 1 };
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 3 };
-    EveryKeyUpChordScanner chordScanner;
+    EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
@@ -42,7 +43,7 @@ void testEveryKeyUpChordScanner() {
   {
     uint8_t firstKeyStates[numberOfBytesForKeys] = { 0, 0, 3 };
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 1 };
-   EveryKeyUpChordScanner chordScanner;
+   EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
@@ -54,7 +55,7 @@ void testEveryKeyUpChordScanner() {
   {
     uint8_t firstKeyStates[numberOfBytesForKeys] = { 0, 0, 3 };
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
-   EveryKeyUpChordScanner chordScanner;
+   EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
@@ -67,7 +68,7 @@ void testEveryKeyUpChordScanner() {
     uint8_t firstKeyStates[numberOfBytesForKeys] = { 0, 0, 3 };
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
     uint8_t thirdKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
-   EveryKeyUpChordScanner chordScanner;
+   EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
@@ -81,7 +82,7 @@ void testEveryKeyUpChordScanner() {
     uint8_t firstKeyStates[numberOfBytesForKeys] = { 0, 0, 3 };
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
     uint8_t thirdKeyStates[numberOfBytesForKeys] = { 0, 0, 1 };
-   EveryKeyUpChordScanner chordScanner;
+   EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
@@ -96,7 +97,7 @@ void testEveryKeyUpChordScanner() {
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
     uint8_t thirdKeyStates[numberOfBytesForKeys] = { 0, 0, 1 };
     uint8_t fourthKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
-   EveryKeyUpChordScanner chordScanner;
+   EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
@@ -110,7 +111,7 @@ void testEveryKeyUpChordScanner() {
   {
     uint8_t firstKeyStates[numberOfBytesForKeys] = { 7, 21, 3 };
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
-     EveryKeyUpChordScanner chordScanner;
+     EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
@@ -127,7 +128,7 @@ void testEveryKeyUpChordScanner() {
     uint8_t secondKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
     uint8_t thirdKeyStates[numberOfBytesForKeys] = { 11, 4, 1 };
     uint8_t fourthKeyStates[numberOfBytesForKeys] = { 0, 0, 0 };
-   EveryKeyUpChordScanner chordScanner;
+   EveryKeyUpChordScanner chordScanner(numberOfKeys);
 
     chordScanner.scan(firstKeyStates);
     chordScanner.scan(secondKeyStates);
