@@ -269,4 +269,21 @@ void testToggleableTextEngine() {
     assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
                && expectedKeyEvent.pressType == actualKeyEvent.pressType);
   }
+
+  test("next_returnsPrintEventWithFirstByteOfSecondText_whenSecondTextIgnoresPrecedingLink");
+  {
+    uint8_t otherTextMetaData = 2;
+    TextFake text(textEngineMetaData, textMetaData, textData);
+    TextFake otherText(otherTextEngineMetaData, otherTextMetaData, otherTextData);
+    ToggleableTextEngine textEngine;
+
+    textEngine.process(&text);
+    (void)textEngine.next();
+    textEngine.process(&otherText);
+
+    KeyEvent expectedKeyEvent(otherTextData, PressType::Print);
+    KeyEvent actualKeyEvent = textEngine.next();
+    assertTrue(expectedKeyEvent.keyCode == actualKeyEvent.keyCode
+               && expectedKeyEvent.pressType == actualKeyEvent.pressType);
+  }
 }
