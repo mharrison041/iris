@@ -3,10 +3,10 @@
 SDCardDictionary::SDCardDictionary(char fileName[]) {
   file = SD.open(fileName);
   if (file) {
+    uint32_t numberOfKeys = readNextFourBytes();
     numberOfEntries = readNextFourBytes();
-  } else {
-    numberOfEntries = 0;
-  }
+    numberOfBytesToEncodeSteno = (numberOfKeys % 8 == 0) ? numberOfKeys / 8 : (numberOfKeys / 8) + 1;
+  } 
 
   memcpy(this->fileName, fileName, strlen(fileName) + 1);
 }
@@ -22,14 +22,14 @@ Text* SDCardDictionary::getTextFor(uint8_t steno[]) {
 
   while (leftEntry <= rightEntry && !matchedSteno) {
     uint32_t middleEntry = leftEntry + (rightEntry - leftEntry) / 2;
-    uint32_t filePosition = metaDataLength + middleEntry * (stenoLength + 2 * textIndexLength);
+    uint32_t filePosition = metaDataLength + middleEntry * (numberOfBytesToEncodeSteno + 2 * textIndexLength);
     file.seek(filePosition);
 
-    for (int i = 0; i < stenoLength; i++) {
+    for (uint32_t i = 0; i < numberOfBytesToEncodeSteno; i++) {
       uint8_t byteFromSteno = steno[i];
       uint8_t byteFromFile = file.read();
 
-      if (i == stenoLength - 1 && byteFromSteno == byteFromFile) {
+      if (i == numberOfBytesToEncodeSteno - 1 && byteFromSteno == byteFromFile) {
         matchedSteno = true;
         break;
       }
