@@ -7,6 +7,7 @@ private:
   uint32_t numberOfProcessedTexts = 0;
   uint32_t numberOfProcessedBytesForCurrentText = 0;
   const uint8_t keyCodeForLink = 32;
+  bool skippingLink = false;
 
 public:
   void process(Text* text);
