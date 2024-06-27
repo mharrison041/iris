@@ -1,16 +1,38 @@
-#ifndef TESTING_H
-#define TESTING_H
-
+#pragma once
 #include <Arduino.h>
 
-void testSuite(char testSuiteName[]);
+void testSuite(char testSuiteName[]) {
+  Serial.println(testSuiteName);
+}
 
-void test(char testName[]);
+void test(char testName[]) {
+  Serial.print("    ");
+  Serial.println(testName);
+}
 
-void assertTrue(bool value);
+void assertTrue(bool value) {
+  Serial.print("    - ");
+  if (value == true) {
+    Serial.println("Passed");
+  } else {
+    Serial.println("Failed");
+  }
 
-void assertFalse(bool value);
+  Serial.print("\n");
+}
 
-void assertEquals(uint8_t array[], uint8_t otherArray[], size_t length);
+void assertFalse(bool value) {
+  assertTrue(!value);
+}
 
-#endif
+void assertEquals(uint8_t array[], uint8_t otherArray[], size_t length) {
+  bool foundDifference = false;
+  for (size_t i = 0; i < length; i++) {
+    if (array[i] != otherArray[i]) {
+      foundDifference = true;
+      break;
+    }
+  }
+  
+  assertFalse(foundDifference);
+}
