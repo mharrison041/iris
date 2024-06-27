@@ -1,5 +1,5 @@
 #include "testing.h"
-#include "ArduinoKeyboardMode.h"
+#include "src/mode/ArduinoKeyboardMode.h"
 
 void testArduinoKeyboardMode() {
   testSuite("ArduinoKeyboardMode");
