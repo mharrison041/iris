@@ -1,5 +1,6 @@
-#include "test/testing.h"
-#include "src/textengine/ToggleableTextEngine.h"
+#pragma once
+#include "testing.h"
+#include "../src/textengine/ToggleableTextEngine.h"
 
 class TextFake : public Text {
 private:
@@ -51,6 +52,10 @@ public:
 };
 
 void testToggleableTextEngine() {
+  Serial.begin(9600);
+  while (!Serial)
+    ;
+    
   testSuite("ToggleableTextEngine");
 
   uint8_t textEngineMetaData = 0;
