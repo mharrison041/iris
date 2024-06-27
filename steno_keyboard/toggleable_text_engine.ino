@@ -1,4 +1,4 @@
-#include "testing.h"
+#include "test/testing.h"
 #include "src/textengine/ToggleableTextEngine.h"
 
 class TextFake : public Text {

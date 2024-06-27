@@ -1,4 +1,4 @@
-#include "testing.h"
+#include "test/testing.h"
 #include "src/keyscanner/KeyScanner.h"
 #include "src/chordscanner/EveryKeyUpChordScanner.h"
 #include "src/dictionary/SDCardDictionary.h"
