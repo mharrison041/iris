@@ -1,7 +1,12 @@
-#include "test/testing.h"
-#include "src/chordscanner/EveryKeyUpChordScanner.h"
+#pragma once
+#include "testing.h"
+#include "../src/chordscanner/EveryKeyUpChordScanner.h"
 
 void testEveryKeyUpChordScanner() {
+  Serial.begin(9600);
+  while (!Serial)
+    ;
+
   testSuite("EveryKeyUpChordScanner");
 
   const size_t numberOfKeys = 23;
