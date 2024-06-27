@@ -1,15 +1,19 @@
-#include "test/testing.h"
-#include "src/keyscanner/KeyScanner.h"
-#include "src/chordscanner/EveryKeyUpChordScanner.h"
-#include "src/dictionary/SDCardDictionary.h"
-#include "src/textengine/ToggleableTextEngine.h"
-#include "src/textprinter/ArduinoKeyboardTextPrinter.h"
-#include "src/mode/StenoMode.h"
+#include "testing.h"
+#include "../src/keyscanner/KeyScanner.h"
+#include "../src/chordscanner/EveryKeyUpChordScanner.h"
+#include "../src/dictionary/SDCardDictionary.h"
+#include "../src/textengine/ToggleableTextEngine.h"
+#include "../src/textprinter/ArduinoKeyboardTextPrinter.h"
+#include "../src/mode/StenoMode.h"
 
 /*
   If "HELLO WORLD!" is automatically typed, then the test has passed.
 */
 void testStenoMode() {
+  Serial.begin(9600);
+  while (!Serial)
+    ;
+
   testSuite("StenoMode");
   const size_t numberOfKeys = 23;
   const size_t numberOfChords = 3;
