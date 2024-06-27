@@ -1,7 +1,14 @@
-#include "test/testing.h"
-#include "src/mode/ArduinoKeyboardMode.h"
+#include <SPI.h>
+#include <SD.h>
+#include "testing.h"
+#include "../src/dictionary/SDCardDictionary.h"
+#include "../src/mode/ArduinoKeyboardMode.h"
 
 void testArduinoKeyboardMode() {
+  Serial.begin(9600);
+  while (!Serial)
+    ;
+
   testSuite("ArduinoKeyboardMode");
 
   const size_t numberOfKeys = 23;
