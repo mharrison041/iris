@@ -1,8 +1,13 @@
-#include "test/testing.h"
-#include "src/dictionary/SDCardDictionary.h"
+#pragma once
+#include <SPI.h>
+#include <SD.h>
+#include "testing.h"
+#include "../src/dictionary/SDCardDictionary.h"
 
-void testSDCardDictionary() {
-  testSuite("SDCardDictionaryTest");
+void testSDCardDictionaryTest() {
+  Serial.begin(9600);
+  while (!Serial)
+    ;
 
   uint8_t slaveSelectPin = 4;
   if (!SD.begin(slaveSelectPin)) {
@@ -10,16 +15,19 @@ void testSDCardDictionary() {
     return;
   }
 
-  char fileName[] = "test";
-  File file = SD.open(fileName, FILE_WRITE);
+  char nameOfTestFile[] = "test";
+  File file = SD.open(nameOfTestFile, FILE_WRITE);
   uint8_t data[34] = { 0, 0, 0, 23,  // number of keys
                        0, 0, 0, 2,   // number of steno entries
+
                        0, 0, 4,      // first steno
                        0, 0, 0, 30,  // initial index of first text
                        0, 0, 0, 32,  // final index of first text
+
                        0, 4, 0,      // second steno
                        0, 0, 0, 32,  // initial index of second text
                        0, 0, 0, 34,  // final index of second text
+
                        17, 50,       // first text
                        74, 25 };     // second text
   file.write(data, 34);
@@ -28,7 +36,9 @@ void testSDCardDictionary() {
   uint8_t firstSteno[3] = { 0, 0, 4 };
   uint8_t secondSteno[3] = { 0, 4, 0 };
   uint8_t unknownSteno[3] = { 0, 1, 0 };
-  SDCardDictionary dictionary(fileName);
+  SDCardDictionary dictionary(nameOfTestFile);
+
+  testSuite("SDCardDictionaryTest");
 
   test("getTextFor_returnsEmptyText_whenFileCannotBeOpened");
   {
@@ -84,5 +94,5 @@ void testSDCardDictionary() {
     delete text;
   }
 
-  SD.remove(fileName);
+  SD.remove(nameOfTestFile);
 }
