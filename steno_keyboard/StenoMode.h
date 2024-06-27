@@ -3,7 +3,7 @@
 #include "src/dictionary/Dictionary.h"
 #include "src/keyscanner/KeyScanner.h"
 #include "src/textprinter/TextPrinter.h"
-#include "Mode.h"
+#include "src/mode/Mode.h"
 
 class StenoMode : public Mode {
 private:
