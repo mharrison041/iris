@@ -1,9 +1,9 @@
 #pragma once
-#include "src/chordscanner/ChordScanner.h"
-#include "src/dictionary/Dictionary.h"
-#include "src/keyscanner/KeyScanner.h"
-#include "src/textprinter/TextPrinter.h"
-#include "src/mode/Mode.h"
+#include "../chordscanner/ChordScanner.h"
+#include "../dictionary/Dictionary.h"
+#include "../keyscanner/KeyScanner.h"
+#include "../textprinter/TextPrinter.h"
+#include "Mode.h"
 
 class StenoMode : public Mode {
 private:

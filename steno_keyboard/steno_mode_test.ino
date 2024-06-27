@@ -4,7 +4,7 @@
 #include "src/dictionary/SDCardDictionary.h"
 #include "src/textengine/ToggleableTextEngine.h"
 #include "src/textprinter/ArduinoKeyboardTextPrinter.h"
-#include "StenoMode.h"
+#include "src/mode/StenoMode.h"
 
 /*
   If "HELLO WORLD!" is automatically typed, then the test has passed.
