@@ -4,6 +4,7 @@
 
 void testSDCardDictionaryTest() {
   connectToPC();
+  testSuite("SDCardDictionaryTest");
   if (!connectToSDCard()) {
     return;
   }
@@ -30,8 +31,6 @@ void testSDCardDictionaryTest() {
   uint8_t secondSteno[3] = { 0, 4, 0 };
   uint8_t unknownSteno[3] = { 0, 1, 0 };
   SDCardDictionary dictionary(nameOfTestFile);
-
-  testSuite("SDCardDictionaryTest");
 
   test("getTextFor_returnsEmptyText_whenFileCannotBeOpened");
   {

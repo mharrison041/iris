@@ -53,8 +53,7 @@ public:
 
 void testToggleableTextEngine() {
   connectToPC();
-    
-  testSuite("ToggleableTextEngine");
+  testSuite("ToggleableTextEngineTest");
 
   uint8_t textEngineMetaData = 0;
   uint8_t textMetaData = 0;

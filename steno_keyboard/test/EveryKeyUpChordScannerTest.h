@@ -4,7 +4,7 @@
 
 void testEveryKeyUpChordScanner() {
   connectToPC();
-  testSuite("EveryKeyUpChordScanner");
+  testSuite("EveryKeyUpChordScannerTest");
 
   const size_t numberOfKeys = 23;
   const size_t numberOfBytesForKeys = 3;

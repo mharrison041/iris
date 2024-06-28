@@ -4,11 +4,10 @@
 
 void testSDCardText() {
   connectToPC();
+  testSuite("SDCardTextTest");
   if (!connectToSDCard()) {
     return;
   }
-
-  testSuite("SDCardText");
 
   char fileNameOfTestFile[] = "test";
   File testFile = SD.open(fileNameOfTestFile, FILE_WRITE);

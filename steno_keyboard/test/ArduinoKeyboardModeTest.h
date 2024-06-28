@@ -4,11 +4,10 @@
 
 void testArduinoKeyboardMode() {
   connectToPC();
+  testSuite("ArduinoKeyboardModeTest");
   if (!connectToSDCard()) {
     return;
   }
-
-  testSuite("ArduinoKeyboardMode");
 
   const size_t numberOfKeys = 23;
   const size_t numberOfKeysToPress = 12;

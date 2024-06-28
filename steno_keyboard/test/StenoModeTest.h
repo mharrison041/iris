@@ -11,11 +11,11 @@
 */
 void testStenoMode() {
   connectToPC();
+  testSuite("StenoModeTest");
   if (!connectToSDCard()) {
     return;
   }
   
-  testSuite("StenoMode");
   const size_t numberOfKeys = 23;
   const size_t numberOfChords = 3;
 
