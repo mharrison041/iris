@@ -5,9 +5,7 @@
 #include "../src/mode/ArduinoKeyboardMode.h"
 
 void testArduinoKeyboardMode() {
-  Serial.begin(9600);
-  while (!Serial)
-    ;
+  connectToPC();
 
   testSuite("ArduinoKeyboardMode");
 

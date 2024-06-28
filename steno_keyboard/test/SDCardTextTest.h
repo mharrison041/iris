@@ -5,9 +5,7 @@
 #include "../src/text/SDCardText.h"
 
 void testSDCardText() {
-  Serial.begin(9600);
-  while (!Serial)
-    ;
+  connectToPC();
 
   uint8_t slaveSelectPin = 4;
   if (!SD.begin(slaveSelectPin)) {

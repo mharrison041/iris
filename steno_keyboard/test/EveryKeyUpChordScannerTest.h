@@ -3,10 +3,7 @@
 #include "../src/chordscanner/EveryKeyUpChordScanner.h"
 
 void testEveryKeyUpChordScanner() {
-  Serial.begin(9600);
-  while (!Serial)
-    ;
-
+  connectToPC();
   testSuite("EveryKeyUpChordScanner");
 
   const size_t numberOfKeys = 23;

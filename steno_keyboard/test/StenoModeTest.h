@@ -10,9 +10,7 @@
   If "HELLO WORLD!" is automatically typed, then the test has passed.
 */
 void testStenoMode() {
-  Serial.begin(9600);
-  while (!Serial)
-    ;
+  connectToPC();
 
   testSuite("StenoMode");
   const size_t numberOfKeys = 23;

@@ -52,9 +52,7 @@ public:
 };
 
 void testToggleableTextEngine() {
-  Serial.begin(9600);
-  while (!Serial)
-    ;
+  connectToPC();
     
   testSuite("ToggleableTextEngine");
 

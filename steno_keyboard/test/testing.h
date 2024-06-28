@@ -36,3 +36,9 @@ void assertEquals(uint8_t array[], uint8_t otherArray[], size_t length) {
   
   assertFalse(foundDifference);
 }
+
+void connectToPC() {
+  Serial.begin(9600);
+  while (!Serial)
+    ;
+}
