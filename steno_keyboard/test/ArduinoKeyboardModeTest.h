@@ -1,11 +1,12 @@
-#include <SPI.h>
-#include <SD.h>
 #include "testing.h"
 #include "../src/dictionary/SDCardDictionary.h"
 #include "../src/mode/ArduinoKeyboardMode.h"
 
 void testArduinoKeyboardMode() {
   connectToPC();
+  if (!connectToSDCard()) {
+    return;
+  }
 
   testSuite("ArduinoKeyboardMode");
 
@@ -39,13 +40,6 @@ void testArduinoKeyboardMode() {
       counter = (counter + 1) % (numberOfKeysToPress + 1);
     }
   };
-
-  // connect to SD card
-  uint8_t slaveSelectPin = 4;
-  if (!SD.begin(slaveSelectPin)) {
-    Serial.println("    Failed to connect to SD card");
-    return;
-  }
 
   // write test file
   char fileName[] = "test";

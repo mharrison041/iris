@@ -11,7 +11,10 @@
 */
 void testStenoMode() {
   connectToPC();
-
+  if (!connectToSDCard()) {
+    return;
+  }
+  
   testSuite("StenoMode");
   const size_t numberOfKeys = 23;
   const size_t numberOfChords = 3;
@@ -37,13 +40,6 @@ void testStenoMode() {
       counter = (counter + 1) % numberOfChordsAndReleases;
     }
   };
-
-  // connect to SD card
-  uint8_t slaveSelectPin = 4;
-  if (!SD.begin(slaveSelectPin)) {
-    Serial.println("    Failed to connect to SD card");
-    return;
-  }
 
   // write test file
   char fileName[] = "test";

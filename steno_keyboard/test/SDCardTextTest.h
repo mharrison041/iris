@@ -1,15 +1,10 @@
 #pragma once
-#include <SPI.h>
-#include <SD.h>
 #include "testing.h"
 #include "../src/text/SDCardText.h"
 
 void testSDCardText() {
   connectToPC();
-
-  uint8_t slaveSelectPin = 4;
-  if (!SD.begin(slaveSelectPin)) {
-    Serial.println("    Failed to connect to SD card");
+  if (!connectToSDCard()) {
     return;
   }
 

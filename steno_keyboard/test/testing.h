@@ -1,4 +1,6 @@
 #pragma once
+#include <SPI.h>
+#include <SD.h>
 #include <Arduino.h>
 
 void testSuite(char testSuiteName[]) {
@@ -41,4 +43,14 @@ void connectToPC() {
   Serial.begin(9600);
   while (!Serial)
     ;
+}
+
+bool connectToSDCard() {
+  uint8_t slaveSelectPin = 4;
+  if (!SD.begin(slaveSelectPin)) {
+    Serial.println("    Failed to connect to SD card");
+    return false;
+  }
+  
+  return true;
 }
