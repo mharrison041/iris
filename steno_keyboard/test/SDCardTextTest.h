@@ -9,26 +9,16 @@ void testSDCardText() {
     return;
   }
 
-  char fileNameOfTestFile[] = "test";
-  File testFile = SD.open(fileNameOfTestFile, FILE_WRITE);
+  char nameOfTestFile[] = "test";
+  File testFile = SD.open(nameOfTestFile, FILE_WRITE);
   testFile.write("abcdefghijklmnopqrstuvwxyz");
   testFile.close();
 
-  test("initialize");
-  {
-    uint32_t initialPosition = 0;
-    uint32_t finalPosition = 3;
-    File testFile = SD.open(fileNameOfTestFile);
-    SDCardText text(initialPosition, finalPosition, testFile);
-    testFile.close();
-    assertTrue(true);
-  }
-
-  test("hasNext_returnsFalse_whenInitialPositionEqualsFinalPosition");
+  test("hasNext_returnsFalse_whenInitialPositionIsEqualToFinalPosition");
   {
     uint32_t initialPosition = 0;
     uint32_t finalPosition = 0;
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     SDCardText text(initialPosition, finalPosition, testFile);
 
     assertFalse(text.hasNext());
@@ -36,11 +26,11 @@ void testSDCardText() {
     testFile.close();
   }
 
-  test("hasNext_returnsFalse_whenInitialPositionIsBiggerThanFinalPosition");
+  test("hasNext_returnsFalse_whenInitialPositionIsGreaterThanFinalPosition");
   {
     uint32_t initialPosition = 1;
     uint32_t finalPosition = 0;
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     SDCardText text(initialPosition, finalPosition, testFile);
 
     assertFalse(text.hasNext());
@@ -50,7 +40,7 @@ void testSDCardText() {
 
   test("hasNext_returnsFalse_whenInitialPositionIsEqualToSizeOfFile");
   {
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     uint32_t initialPosition = testFile.size();
     uint32_t finalPosition = initialPosition + 1;
     SDCardText text(initialPosition, finalPosition, testFile);
@@ -62,7 +52,7 @@ void testSDCardText() {
 
   test("hasNext_returnsFalse_whenInitialPositionIsGreaterThanSizeOfFile");
   {
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     uint32_t initialPosition = testFile.size() + 1;
     uint32_t finalPosition = initialPosition + 1;
     SDCardText text(initialPosition, finalPosition, testFile);
@@ -72,11 +62,11 @@ void testSDCardText() {
     testFile.close();
   }
 
-  test("hasNext_returnsFalse_whenLastByteOfRangeHasBeenRead");
+  test("hasNext_returnsFalse_whenLastByteOfTextRangeHasBeenRead");
   {
     uint32_t initialPosition = 1;
     uint32_t finalPosition = 0;
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     SDCardText text(initialPosition, finalPosition, testFile);
 
     (void)text.next();
@@ -90,7 +80,7 @@ void testSDCardText() {
   {
     uint32_t initialPosition = 0;
     uint32_t finalPosition = 1;
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     SDCardText text(initialPosition, finalPosition, testFile);
 
     assertTrue(text.hasNext());
@@ -98,11 +88,11 @@ void testSDCardText() {
     testFile.close();
   }
 
-  test("next_returnsFirstByteOfRange_whenInitiallyCalled");
+  test("next_returnsFirstByteOfTextRange_whenInitiallyCalled");
   {
     uint32_t initialPosition = 0;
     uint32_t finalPosition = 1;
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     SDCardText text(initialPosition, finalPosition, testFile);
 
     uint8_t expectedByte = 'a';
@@ -112,11 +102,11 @@ void testSDCardText() {
     testFile.close();
   }
 
-  test("next_returnsSecondByteOfRange_whenCalledTwice");
+  test("next_returnsSecondByteOfTextRange_whenCalledTwice");
   {
     uint32_t initialPosition = 0;
     uint32_t finalPosition = 1;
-    File testFile = SD.open(fileNameOfTestFile);
+    File testFile = SD.open(nameOfTestFile);
     SDCardText text(initialPosition, finalPosition, testFile);
 
     (void)text.next();
@@ -128,5 +118,5 @@ void testSDCardText() {
     testFile.close();
   }
 
-  SD.remove(fileNameOfTestFile);
+  SD.remove(nameOfTestFile);
 }
