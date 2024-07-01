@@ -2,56 +2,56 @@
 #include "testing.h"
 #include "../src/textengine/ToggleableTextEngine.h"
 
-class TextFake : public Text {
-private:
-  static const size_t NUMBER_OF_BYTES_FOR_TEXT = 3;
-  uint8_t bytes[NUMBER_OF_BYTES_FOR_TEXT] = { 0 };
-  size_t counter = 0;
-
-public:
-  TextFake(uint8_t textEngineMetaData, uint8_t textMetaData, uint8_t text) {
-    bytes[0] = textEngineMetaData;
-    bytes[1] = textMetaData;
-    bytes[2] = text;
-  }
-
-  TextFake() {
-    counter = NUMBER_OF_BYTES_FOR_TEXT;
-  }
-
-  bool hasNext() {
-    return counter < NUMBER_OF_BYTES_FOR_TEXT;
-  }
-
-  uint8_t next() {
-    return bytes[counter++];
-  }
-};
-
-class LongTextFake : public Text {
-private:
-  static const size_t NUMBER_OF_BYTES_FOR_TEXT = 4;
-  uint8_t bytes[NUMBER_OF_BYTES_FOR_TEXT] = { 0 };
-  size_t counter = 0;
-
-public:
-  LongTextFake(uint8_t textEngineMetaData, uint8_t textMetaData, uint8_t firstByte, uint8_t secondByte) {
-    bytes[0] = textEngineMetaData;
-    bytes[1] = textMetaData;
-    bytes[2] = firstByte;
-    bytes[3] = secondByte;
-  }
-
-  bool hasNext() {
-    return counter < NUMBER_OF_BYTES_FOR_TEXT;
-  }
-
-  uint8_t next() {
-    return bytes[counter++];
-  }
-};
-
 void testToggleableTextEngine() {
+  class TextFake : public Text {
+  private:
+    static const size_t NUMBER_OF_BYTES_FOR_TEXT = 3;
+    uint8_t bytes[NUMBER_OF_BYTES_FOR_TEXT] = { 0 };
+    size_t counter = 0;
+
+  public:
+    TextFake(uint8_t textEngineMetaData, uint8_t textMetaData, uint8_t text) {
+      bytes[0] = textEngineMetaData;
+      bytes[1] = textMetaData;
+      bytes[2] = text;
+    }
+
+    TextFake() {
+      counter = NUMBER_OF_BYTES_FOR_TEXT;
+    }
+
+    bool hasNext() {
+      return counter < NUMBER_OF_BYTES_FOR_TEXT;
+    }
+
+    uint8_t next() {
+      return bytes[counter++];
+    }
+  };
+
+  class LongTextFake : public Text {
+  private:
+    static const size_t NUMBER_OF_BYTES_FOR_TEXT = 4;
+    uint8_t bytes[NUMBER_OF_BYTES_FOR_TEXT] = { 0 };
+    size_t counter = 0;
+
+  public:
+    LongTextFake(uint8_t textEngineMetaData, uint8_t textMetaData, uint8_t firstByte, uint8_t secondByte) {
+      bytes[0] = textEngineMetaData;
+      bytes[1] = textMetaData;
+      bytes[2] = firstByte;
+      bytes[3] = secondByte;
+    }
+
+    bool hasNext() {
+      return counter < NUMBER_OF_BYTES_FOR_TEXT;
+    }
+
+    uint8_t next() {
+      return bytes[counter++];
+    }
+  };
+
   connectToPC();
   testSuite("ToggleableTextEngineTest");
 
@@ -62,12 +62,6 @@ void testToggleableTextEngine() {
   uint8_t otherTextEngineMetaData = 0;
   uint8_t otherTextMetaData = 0;
   uint8_t otherTextData = 97;
-
-  test("initialize");
-  {
-    TextEngine* textEngine = &ToggleableTextEngine();
-    assertTrue(true);
-  }
 
   test("hasNext_returnsFalse_whenTextIsEmpty");
   {
